@@ -1,0 +1,41 @@
+spring:
+  jpa:
+    generate-ddl: 'true'
+    database: h2
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=PostgreSQL;
+    username: ndxpro
+    password:
+    name: quartzDS
+  h2:
+    console:
+      enabled: true
+  quartz:
+    scheduler-name: QuartzScheduler
+    job-store-type: jdbc
+    properties:
+      org.quartz.scheduler.instanceName: QuartzScheduler
+      org.quartz.scheduler.instanceId: AUTO
+
+      org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+      org.quartz.threadPool.threadCount: 100
+
+      org.quartz.jobStore.class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      org.quartz.jobStore.dataSource: quartzDS
+      org.quartz.jobStore.isClustered: true
+      org.quartz.jobStore.clusterCheckinInterval: 20000
+
+      org.quartz.dataSource.quartzDS.provider: hikaricp
+      org.quartz.dataSource.quartzDS.driver: org.h2.Driver
+      org.quartz.dataSource.quartzDS.URL: jdbc:h2:mem:test;MODE=PostgreSQL;
+      org.quartz.dataSource.quartzDS.user: ndxpro
+      org.quartz.dataSource.quartzDS.password:
+      org.quartz.dataSource.quartzDS.maxConnections: 10
